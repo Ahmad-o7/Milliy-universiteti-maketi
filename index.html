@@ -110,25 +110,43 @@ body{
 <audio id="audioPlayer"></audio>
 
 <script>
-function selectBuilding(btn,name,audioFile){
+let currentButton = null;   // qaysi tugma oxirgi bosilgan
+let audio = document.getElementById('audioPlayer');
 
-    // Barcha tugmalardan active ni olib tashlash
+function selectBuilding(btn, name, audioFile){
+
+    // Agar shu tugma qayta bosilsa
+    if(currentButton === btn){
+        if(!audio.paused){
+            audio.pause();
+            btn.classList.remove('active');
+            document.getElementById('infoBox').innerText =
+                "Tanlangan bino: —";
+        }else{
+            audio.play();
+            btn.classList.add('active');
+            document.getElementById('infoBox').innerText =
+                "Tanlangan bino: " + name;
+        }
+        return;
+    }
+
+    // Boshqa tugma bosilsa
     document.querySelectorAll('.bar-btn')
-        .forEach(b=>b.classList.remove('active'));
+        .forEach(b => b.classList.remove('active'));
 
-    // Bosilgan tugmani yoritish
+    audio.pause();
+    audio.currentTime = 0;
+
+    currentButton = btn;
     btn.classList.add('active');
 
-    // Qaysi bino ekanini ko‘rsatish
     document.getElementById('infoBox').innerText =
         "Tanlangan bino: " + name;
 
-    // Audio
-    const audio=document.getElementById('audioPlayer');
-    audio.src=audioFile;
+    audio.src = audioFile;
     audio.play();
 }
 </script>
-
 </body>
 </html>
