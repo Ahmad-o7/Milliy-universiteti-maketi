@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milliy universiteti Jizzax filiali</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f2f2f2;
+}
+
+/* Asosiy konteyner */
+#map-container{
+    position:relative;
+    width:100%;
+    max-width:950px;
+    height:450px;
+    margin:20px auto;
+    border:2px solid #333;
+    overflow:hidden;
+    background:#000;
+}
+
+/* iframe */
+#map-container iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+/* Tanlangan bino ko‘rsatkichi */
+#infoBox{
+    position:absolute;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.65);
+    color:#fff;
+    padding:8px 16px;
+    border-radius:8px;
+    font-size:16px;
+    z-index:5;
+}
+
+/* Pastki tugmalar lentasi */
+#buttonBar{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    max-width:950px;
+    margin:10px auto;
+    background:#ffffff;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    padding:8px;
+}
+
+/* Tugmalar */
+.bar-btn{
+    flex:1;
+    margin:4px;
+    padding:10px 6px;
+    border:none;
+    border-radius:10px;
+    background:#e0e0e0;
+    cursor:pointer;
+    font-size:14px;
+    transition:.3s;
+}
+
+.bar-btn.active{
+    background:#005eff;
+    color:white;
+    transform:scale(1.05);
+}
+
+/* Mobil */
+@media(max-width:600px){
+    #map-container{height:300px;}
+    .bar-btn{font-size:12px;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="map-container">
+
+    <div id="infoBox">Tanlangan bino: —</div>
+
+    <iframe
+      src="https://nova.delightex.com/shared/ffnaju"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+
+</div>
+
+<!-- Tugmalar lentasi -->
+<div id="buttonBar">
+    <button class="bar-btn" onclick="selectBuilding(this,'A bino','Milliy Universiteti/A bino.ogg')">🏢 A bino</button>
+    <button class="bar-btn" onclick="selectBuilding(this,'B bino','Milliy Universiteti/B bina.ogg')">🏢 B bino</button>
+    <button class="bar-btn" onclick="selectBuilding(this,'Asosiy bino','Milliy Universiteti/Asosiy bino.ogg')">🏛️ Asosiy</button>
+    <button class="bar-btn" onclick="selectBuilding(this,'Talabalar turar joyi','Milliy Universiteti/Talabalar turar joyi.ogg')">🏨 TTJ</button>
+</div>
+
+<audio id="audioPlayer"></audio>
+
+<script>
+function selectBuilding(btn,name,audioFile){
+
+    // Barcha tugmalardan active ni olib tashlash
+    document.querySelectorAll('.bar-btn')
+        .forEach(b=>b.classList.remove('active'));
+
+    // Bosilgan tugmani yoritish
+    btn.classList.add('active');
+
+    // Qaysi bino ekanini ko‘rsatish
+    document.getElementById('infoBox').innerText =
+        "Tanlangan bino: " + name;
+
+    // Audio
+    const audio=document.getElementById('audioPlayer');
+    audio.src=audioFile;
+    audio.play();
+}
+</script>
+
+</body>
+</html>
