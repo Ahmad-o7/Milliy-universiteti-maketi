@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milliy universiteti Jizzax filiali maketi</title>
+
+<style>
+/* Xarita konteyner */
+#map-container{
+    position:relative;
+    width:100%;
+    max-width:950px;
+    height:450px;
+    margin:0 auto;
+    background:#000;
+    border:2px solid #333;
+    overflow:hidden;
+}
+
+/* iframe */
+#map-container iframe{
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    border:0;
+    z-index:1;
+}
+
+/* Tugmalar */
+.map-button{
+    position:absolute;
+    display:flex;
+    align-items:center;
+    background:#005EFF59;
+    color:white;
+    font-size:18px;
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    overflow:hidden;
+    transition:.3s ease;
+    box-shadow:0 3px 6px rgba(0,0,0,.5);
+    padding-left:6px;
+    z-index:2; /* iframe ustida chiqishi uchun */
+}
+
+.icon{font-size:20px;}
+.label-text{
+    opacity:0;
+    margin-left:6px;
+    font-size:14px;
+    white-space:nowrap;
+    transition:.3s;
+}
+.map-button:hover{width:180px;}
+.map-button:hover .label-text{opacity:1;}
+
+/* Tugmalar joylashuvi */
+#b-bino{top:10%; left:9%;}
+#asosiy-bino{top:26%; left:35%;}
+#a-bino{top:15%; left:60%;}
+#ttj{top:1%; left:34%;}
+
+/* Modal */
+#playerModal{
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+#modalContent{
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    width:90%;
+    max-width:450px;
+    text-align:center;
+}
+#closeBtn{
+    background:red;
+    color:white;
+    padding:6px 12px;
+    border:none;
+    border-radius:6px;
+    float:right;
+    cursor:pointer;
+}
+audio{width:100%;}
+
+/* Mobil */
+@media (max-width:600px){
+    #map-container{height:300px;}
+    .map-button{width:32px;height:32px;font-size:14px;}
+    .map-button:hover{width:150px;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="map-container">
+
+    <!-- DELIGHTEX IFRAME -->
+    <iframe 
+      src="https://nova.delightex.com/shared/ffnaju"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+
+    <button id="a-bino" class="map-button" onclick="openPlayer('Milliy Universiteti/B bina.ogg')">
+        <span class="icon">🏢</span><span class="label-text">B bino</span>
+    </button>
+
+    <button id="asosiy-bino" class="map-button" onclick="openPlayer('Milliy Universiteti/Asosiy bino.ogg')">
+        <span class="icon">🏛️</span><span class="label-text">Asosiy bino</span>
+    </button>
+
+    <button id="b-bino" class="map-button" onclick="openPlayer('Milliy Universiteti/A bino.ogg')">
+        <span class="icon">🏢</span><span class="label-text">A bino</span>
+    </button>
+
+    <button id="ttj" class="map-button" onclick="openPlayer('Milliy Universiteti/Talabalar turar joyi.ogg')">
+        <span class="icon">🏨</span><span class="label-text">TTJ</span>
+    </button>
+
+</div>
+
+<!-- Modal -->
+<div id="playerModal">
+    <div id="modalContent">
+        <button id="closeBtn" onclick="closePlayer()">❌ Yopish</button><br><br>
+        <audio id="audioPlayer" controls autoplay></audio>
+    </div>
+</div>
+
+<script>
+function openPlayer(audioFile){
+    document.getElementById("playerModal").style.display="flex";
+    const audio = document.getElementById("audioPlayer");
+    audio.src = audioFile;
+    audio.play();
+}
+function closePlayer(){
+    document.getElementById("playerModal").style.display="none";
+    document.getElementById("audioPlayer").pause();
+}
+</script>
+
+</body>
+</html>
